@@ -215,6 +215,21 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -.04em; text-wrap: balance; }
 .resume-body p { margin-block: .45rem; }
 .resume-body ul { padding-left: 1.25rem; }
 .resume-body li { margin-bottom: .5rem; }
+.about-hero { max-width: 900px; padding-block: clamp(1rem, 4vw, 3rem) clamp(4rem, 9vw, 8rem); }
+.about-hero h1 { margin: 0; font-size: clamp(3rem, 9vw, 6.5rem); }
+.about-hero > p:last-child { max-width: 760px; color: var(--muted); font-size: clamp(1.08rem, 2.2vw, 1.35rem); }
+.about-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--border); }
+.about-grid section { min-height: 20rem; padding: 1.5rem; }
+.about-grid section + section { border-left: 1px solid var(--border); }
+.about-grid__index { color: var(--accent); font: 600 .75rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.about-grid h2 { margin: 5rem 0 1rem; font-size: 1.6rem; }
+.about-grid p { color: var(--muted); }
+.about-contact { display: flex; align-items: end; justify-content: space-between; gap: 2rem; padding-block: clamp(5rem, 12vw, 10rem); }
+.about-contact > div:first-child { max-width: 700px; }
+.about-contact h2 { margin: .5rem 0 0; font-size: clamp(2rem, 5vw, 3.5rem); }
+.not-found-page { display: flex; min-height: calc(100vh - 12rem); flex-direction: column; justify-content: center; padding-block: 4rem; }
+.not-found-page h1 { max-width: 800px; margin: 0; font-size: clamp(2.8rem, 8vw, 5.8rem); }
+.not-found-page > p:not(.eyebrow) { max-width: 620px; color: var(--muted); }
 .empty-blog-state { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: clamp(1.5rem, 4vw, 2.8rem); border: 1px dashed var(--border); border-radius: 1rem; background: var(--background); }
 .empty-blog-state__prompt { color: var(--accent); font: 600 .78rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 .empty-blog-state h3 { margin: 1.5rem 0 .6rem; font-size: 1.8rem; }
@@ -298,6 +313,11 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -.04em; text-wrap: balance; }
   .article-card { min-height: 16rem; }
   .resume-header { align-items: flex-start; }
   .resume-photo { width: 86px; height: 108px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-grid section { min-height: auto; padding-block: 2rem; }
+  .about-grid section + section { border-left: 0; border-top: 1px solid var(--border); }
+  .about-grid h2 { margin-top: 2.5rem; }
+  .about-contact { align-items: flex-start; flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {

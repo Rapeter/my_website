@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const { slug } = await params
   const post = getPostBySlug(slug)
   if (!post) return {}
-  return { title: `${post.meta.title}｜王楷中`, description: post.meta.summary }
+  return { title: post.meta.title, description: post.meta.summary }
 }
 
 const dateFormatter = new Intl.DateTimeFormat('zh-CN', {

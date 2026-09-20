@@ -3,7 +3,7 @@ import { ProjectCard } from '@/components/project-card'
 import { getAllProjects } from '@/lib/content/projects'
 
 export const metadata: Metadata = {
-  title: '项目｜王楷中',
+  title: '项目',
   description: 'AI Agent、工具调用、记忆治理与应用落地相关项目案例。'
 }
 

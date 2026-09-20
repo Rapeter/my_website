@@ -3,7 +3,7 @@ import { ArticleCard } from '@/components/article-card'
 import { getPublishedPosts, type PostEntry } from '@/lib/content/posts'
 
 export const metadata: Metadata = {
-  title: '博客｜王楷中',
+  title: '博客',
   description: '记录求职复盘、Agent 工程实践与学习过程中的认知变化。'
 }
 
