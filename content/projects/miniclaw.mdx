@@ -1,0 +1,39 @@
+---
+slug: miniclaw
+title: Miniclaw
+summary: 支持多渠道接入、Agent 身份与工作区管理、结构化记忆和工程化验证的自托管工作台。
+role: 个人项目 / 开源参考实现
+status: active
+tags: [TypeScript, Hono, SQLite, React, WebSocket, Pi Agent Runtime]
+featured: true
+order: 3
+evidence: []
+---
+
+## 背景与问题
+
+团队长期使用 Agent 时，需要同时处理身份、工作区、运行会话、跨会话记忆和异构消息渠道。Miniclaw 以自托管工作台的形式整理这些边界，避免把身份配置、聊天记录与运行状态混为一体。
+
+## 使用流程
+
+用户选择 Agent Profile 进入隔离工作区，通过 Web 或消息渠道发起任务。运行时按预算组装身份与工具上下文，完成任务后把可复用知识写入工作区级记忆，并保留可审计的版本变化。
+
+## 系统设计
+
+产品模型划分为 Profile、Workspace 与 Runtime Session 三层。Workspace 级 Memory 使用四类知识结构、双 revision CAS、幂等重放和 FTS5 全文检索；渠道侧通过 `IMChannel` 契约、JID 寻址与流式卡片控制器接入统一管线。
+
+## 关键技术决策
+
+- 将 Agent 身份与策略、工作区隔离、运行记录分层，保证身份变更能够审计传播。
+- 以 revision CAS 与幂等重放防护并发记忆写入，并让知识可追踪、可检索。
+- 用 IDENTITY、SOUL、AGENTS、TOOLS 四段配置和 `PromptPlan` 控制上下文预算，在调用模型前处理超额风险。
+- 用渠道适配器隔离异构 IM SDK，保持 Agent 核心不感知具体渠道实现。
+- 将跨端类型同步和测试门禁前置，降低前端、后端与 Runner 之间的协议漂移。
+
+## 验证方式
+
+项目以跨端 Vitest、类型同步和 CI 七道闸门检查协议、构建与运行边界，把可发现的错误尽量前移到开发阶段。记忆相关验证覆盖版本冲突、幂等重放与检索路径。
+
+## 证据与链接
+
+当前公开站点仅发布来自简历第一版的已确认描述；项目材料更新后再补充仓库、演示或技术文章链接。
