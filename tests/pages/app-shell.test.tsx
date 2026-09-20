@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import HomePage from '@/app/page'
 
-test('presents the role and primary navigation', () => {
-  render(<HomePage />)
+test('presents the role and primary navigation', async () => {
+  render(await HomePage())
 
   expect(screen.getByRole('heading', { name: /AI Agent/i })).toBeInTheDocument()
   expect(screen.getByRole('link', { name: '项目' })).toHaveAttribute('href', '/projects')
