@@ -7,14 +7,19 @@ import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 import rehypePrettyCode from 'rehype-pretty-code'
 import { mdxComponents } from '@/components/mdx-components'
-import { getPostBySlug, getPublishedPosts } from '@/lib/content/posts'
+import { extractTableOfContents } from '@/lib/content/toc'
+import { filterPublishedPosts, getPostBySlug, getPublishedPosts, type PostEntry } from '@/lib/content/posts'
 
 type BlogPostPageProps = { params: Promise<{ slug: string }> }
 
 export const dynamicParams = false
 
+export function buildStaticParams(posts: PostEntry[]) {
+  return filterPublishedPosts(posts).map((post) => ({ slug: post.meta.slug }))
+}
+
 export function generateStaticParams() {
-  return getPublishedPosts().map((post) => ({ slug: post.meta.slug }))
+  return buildStaticParams(getPublishedPosts())
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
@@ -38,6 +43,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const newer = index > 0 ? posts[index - 1] : null
   const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null
   const minutes = Math.max(1, Math.ceil(readingTime(post.body).minutes))
+  const tableOfContents = extractTableOfContents(post.body)
   const { content } = await compileMDX({
     source: post.body,
     components: mdxComponents,
@@ -64,6 +70,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {post.meta.tags.map((tag) => <li key={tag}>{tag}</li>)}
         </ul>
       </header>
+      {tableOfContents.length > 0 ? (
+        <nav className="article-toc" aria-label="文章目录">
+          <p>目录</p>
+          <ol>
+            {tableOfContents.map((heading) => (
+              <li key={heading.id} data-depth={heading.depth}>
+                <a href={`#${heading.id}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      ) : null}
       <article className="prose article-prose">{content}</article>
       <nav className="article-navigation" aria-label="相邻文章">
         {newer ? <Link href={`/blog/${newer.meta.slug}`}><span>上一篇</span>{newer.meta.title}</Link> : <span />}

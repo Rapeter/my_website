@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ArticleCard } from '@/components/article-card'
 import { EmptyBlogState } from '@/components/empty-blog-state'
 import { ProjectCard } from '@/components/project-card'
-import { getPublishedPosts, type PostEntry } from '@/lib/content/posts'
+import { getPublishedPosts, getRecentPosts, type PostEntry } from '@/lib/content/posts'
 import { getAllProjects, type ProjectEntry } from '@/lib/content/projects'
 import { siteConfig } from '@/lib/site-config'
 
@@ -15,7 +15,7 @@ const capabilities = [
 
 export function HomeContent({ projects, posts }: { projects: ProjectEntry[]; posts: PostEntry[] }) {
   const featuredProjects = projects.filter((project) => project.meta.featured)
-  const recentPosts = posts.slice(0, 3)
+  const recentPosts = getRecentPosts(posts)
 
   return (
     <>

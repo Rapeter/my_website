@@ -47,7 +47,26 @@ test('core pages render without external network access', async ({ page, baseURL
   await page.goto('/projects/folio')
   await expect(page.getByRole('heading', { name: 'Folio' })).toBeVisible()
   await page.goto('/blog')
-  await expect(page.getByText(/第一篇文章正在准备中/)).toBeVisible()
+  await expect(page.getByRole('heading', { name: '博客', exact: true })).toBeVisible()
   await page.goto('/resume')
   await expect(page.getByRole('heading', { name: '王楷中' })).toBeVisible()
+})
+
+test('dark theme resume remains readable when printed', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('theme', 'dark'))
+  await page.goto('/resume')
+  await page.emulateMedia({ media: 'print' })
+
+  const paragraph = page.locator('.resume-body p').first()
+  await expect(paragraph).toBeVisible()
+  expect(await paragraph.evaluate((element) => getComputedStyle(element).color)).toBe('rgb(0, 0, 0)')
+})
+
+test('project cards can be opened from the card surface', async ({ page }) => {
+  await page.goto('/projects')
+  const card = page.locator('.project-card').first()
+  const box = await card.boundingBox()
+  expect(box).not.toBeNull()
+  await page.mouse.click(box!.x + box!.width - 24, box!.y + 24)
+  await expect(page).toHaveURL(/\/projects\/folio$/)
 })

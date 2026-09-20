@@ -4,7 +4,7 @@
 
 ## 本地运行
 
-环境要求：Node.js 20.17.0、pnpm 10.33.0。
+环境要求：Node.js 20.19.0 或更新的兼容版本、pnpm 10.33.0。
 
 ```bash
 pnpm install

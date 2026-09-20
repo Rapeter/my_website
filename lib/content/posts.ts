@@ -27,6 +27,12 @@ export function filterPublishedPosts(posts: PostEntry[]): PostEntry[] {
     })
 }
 
+export function getRecentPosts(posts: PostEntry[], limit = 3): PostEntry[] {
+  return [...posts]
+    .sort((a, b) => (b.meta.publishedAt?.getTime() ?? 0) - (a.meta.publishedAt?.getTime() ?? 0))
+    .slice(0, limit)
+}
+
 export function getPublishedPosts(): PostEntry[] {
   return filterPublishedPosts(readContentFiles(postsDirectory).map(parsePost))
 }
