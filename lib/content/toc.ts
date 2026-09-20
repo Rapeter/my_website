@@ -1,34 +1,42 @@
-import GithubSlugger from 'github-slugger'
-
 export type TableOfContentsItem = {
   depth: 2 | 3
   text: string
   id: string
 }
 
-function plainHeadingText(value: string): string {
-  return value
-    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-    .replace(/<[^>]+>/g, '')
-    .replace(/[`*_~]/g, '')
-    .trim()
+type HastNode = {
+  type?: string
+  tagName?: string
+  value?: string
+  properties?: Record<string, unknown>
+  children?: HastNode[]
 }
 
-export function extractTableOfContents(source: string): TableOfContentsItem[] {
-  const slugger = new GithubSlugger()
-  const headings: TableOfContentsItem[] = []
-  const headingPattern = /^(#{2,3})\s+(.+?)\s*#*\s*$/gm
+function textContent(node: HastNode): string {
+  if (node.type === 'text') return node.value ?? ''
+  return node.children?.map(textContent).join('') ?? ''
+}
 
-  for (const match of source.matchAll(headingPattern)) {
-    const text = plainHeadingText(match[2])
-    if (!text) continue
-    headings.push({
-      depth: match[1].length as 2 | 3,
-      text,
-      id: slugger.slug(text)
-    })
+export function createTableOfContentsPlugin(items: TableOfContentsItem[]) {
+  return function tableOfContentsPlugin() {
+    return (tree: unknown) => {
+      function visit(node: HastNode) {
+        if (node.type === 'element' && (node.tagName === 'h2' || node.tagName === 'h3')) {
+          const id = node.properties?.id
+          const text = textContent(node).trim()
+          if (typeof id === 'string' && text) {
+            items.push({
+              depth: Number(node.tagName.slice(1)) as 2 | 3,
+              text,
+              id
+            })
+          }
+        }
+
+        node.children?.forEach(visit)
+      }
+
+      visit(tree as HastNode)
+    }
   }
-
-  return headings
 }

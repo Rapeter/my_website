@@ -1,21 +1,26 @@
-import { extractTableOfContents } from '@/lib/content/toc'
+// @vitest-environment node
+import { compilePostMdx } from '@/lib/content/compile-post'
 
-test('extracts level-two and level-three headings with stable duplicate slugs', () => {
+test('collects the exact rendered heading ids from the MDX syntax tree', async () => {
   const source = `
-# 不进入目录
+# Same
 
-## 第一个标题
+## Same
 
-### 重复标题
+\`\`\`md
+## Fake
+\`\`\`
 
-### 重复标题
+## Fake
 
-#### 不进入目录
+## a_b
 `
 
-  expect(extractTableOfContents(source)).toEqual([
-    { depth: 2, text: '第一个标题', id: '第一个标题' },
-    { depth: 3, text: '重复标题', id: '重复标题' },
-    { depth: 3, text: '重复标题', id: '重复标题-1' }
+  const { tableOfContents } = await compilePostMdx(source)
+
+  expect(tableOfContents).toEqual([
+    { depth: 2, text: 'Same', id: 'same-1' },
+    { depth: 2, text: 'Fake', id: 'fake' },
+    { depth: 2, text: 'a_b', id: 'a_b' }
   ])
 })

@@ -1,13 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { compileMDX } from 'next-mdx-remote/rsc'
 import readingTime from 'reading-time'
-import remarkGfm from 'remark-gfm'
-import rehypeSlug from 'rehype-slug'
-import rehypePrettyCode from 'rehype-pretty-code'
-import { mdxComponents } from '@/components/mdx-components'
-import { extractTableOfContents } from '@/lib/content/toc'
+import { compilePostMdx } from '@/lib/content/compile-post'
 import { filterPublishedPosts, getPostBySlug, getPublishedPosts, type PostEntry } from '@/lib/content/posts'
 
 type BlogPostPageProps = { params: Promise<{ slug: string }> }
@@ -43,17 +38,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const newer = index > 0 ? posts[index - 1] : null
   const older = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null
   const minutes = Math.max(1, Math.ceil(readingTime(post.body).minutes))
-  const tableOfContents = extractTableOfContents(post.body)
-  const { content } = await compileMDX({
-    source: post.body,
-    components: mdxComponents,
-    options: {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [rehypeSlug, rehypePrettyCode]
-      }
-    }
-  })
+  const { content, tableOfContents } = await compilePostMdx(post.body)
 
   return (
     <div className="page-shell page-section reading-shell">
