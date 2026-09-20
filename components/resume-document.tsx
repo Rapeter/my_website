@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 import type { ResumeEntry } from '@/lib/content/resumes'
 import { siteConfig } from '@/lib/site-config'
 
@@ -19,12 +20,12 @@ export function ResumeDocument({ resume, children }: { resume: ResumeEntry; chil
           <p className="section-kicker">RESUME / 当前简历</p>
           <h1>{resume.meta.title}</h1>
           <p className="resume-role">{resume.meta.targetRole}</p>
-          <address>
-            <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-            <a href={siteConfig.github} target="_blank" rel="noreferrer">github.com/{siteConfig.handle}</a>
-          </address>
         </div>
-        <img className="resume-photo" src="/images/profile.jpg" alt="王楷中证件照" width="118" height="148" />
+        <Image className="resume-photo" src="/images/profile.jpg" alt="王楷中证件照" width={118} height={148} priority />
+        <address>
+          <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+          <a href={siteConfig.github} target="_blank" rel="noreferrer">github.com/{siteConfig.handle}</a>
+        </address>
       </header>
 
       <div className="resume-actions">

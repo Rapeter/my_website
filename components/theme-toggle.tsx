@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 
 type Theme = 'light' | 'dark' | 'system'
 
@@ -11,6 +11,20 @@ const labels: Record<Theme, string> = {
 }
 
 const order: Theme[] = ['system', 'light', 'dark']
+
+function readStoredTheme(): Theme {
+  const stored = window.localStorage.getItem('theme') as Theme | null
+  return stored && order.includes(stored) ? stored : 'system'
+}
+
+function subscribeToTheme(onStoreChange: () => void) {
+  window.addEventListener('storage', onStoreChange)
+  window.addEventListener('themechange', onStoreChange)
+  return () => {
+    window.removeEventListener('storage', onStoreChange)
+    window.removeEventListener('themechange', onStoreChange)
+  }
+}
 
 function applyTheme(theme: Theme) {
   const resolved =
@@ -25,24 +39,23 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('system')
+  const theme = useSyncExternalStore<Theme>(subscribeToTheme, readStoredTheme, () => 'system')
 
   useEffect(() => {
-    const stored = window.localStorage.getItem('theme') as Theme | null
-    const initial = stored && order.includes(stored) ? stored : 'system'
-    setTheme(initial)
-    applyTheme(initial)
+    applyTheme(theme)
 
     const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const syncSystem = () => initial === 'system' && applyTheme('system')
+    const syncSystem = () => {
+      if (readStoredTheme() === 'system') applyTheme('system')
+    }
     media.addEventListener('change', syncSystem)
     return () => media.removeEventListener('change', syncSystem)
-  }, [])
+  }, [theme])
 
   function cycleTheme() {
     const next = order[(order.indexOf(theme) + 1) % order.length]
-    setTheme(next)
     window.localStorage.setItem('theme', next)
+    window.dispatchEvent(new Event('themechange'))
     applyTheme(next)
   }
 

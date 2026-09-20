@@ -26,6 +26,7 @@ export const mdxComponents = {
   },
   img: ({ alt, ...props }) => {
     if (!alt?.trim()) throw new Error('MDX images require non-empty alt text')
+    // eslint-disable-next-line @next/next/no-img-element -- MDX authors may supply intrinsic dimensions dynamically.
     return <img alt={alt} loading="lazy" {...props} />
   },
   blockquote: (props) => <blockquote className="prose-quote" {...props} />,

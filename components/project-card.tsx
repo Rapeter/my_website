@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { ProjectEntry } from '@/lib/content/projects'
 
 const statusLabels = {
@@ -12,7 +13,7 @@ export function ProjectCard({ project }: { project: ProjectEntry }) {
 
   return (
     <article className="project-card">
-      {meta.cover ? <img className="project-card__cover" src={meta.cover} alt="" /> : null}
+      {meta.cover ? <Image className="project-card__cover" src={meta.cover} alt="" width={1200} height={675} /> : null}
       <div className="project-card__topline">
         <span className="status-dot" data-status={meta.status}>{statusLabels[meta.status]}</span>
         <span>{meta.role}</span>
