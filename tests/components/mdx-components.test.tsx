@@ -14,3 +14,16 @@ test('rejects MDX images without meaningful alt text', () => {
 
   expect(() => render(<Image src="/diagram.png" alt="" />)).toThrow(/alt text/i)
 })
+
+test('keeps rich heading anchor labels readable', () => {
+  const Heading = mdxComponents.h2!
+
+  render(
+    <Heading id="rich-heading">
+      <strong>粗体</strong>
+      <code>code</code>
+    </Heading>
+  )
+
+  expect(screen.getByRole('link', { name: '链接到 粗体code' })).toBeInTheDocument()
+})

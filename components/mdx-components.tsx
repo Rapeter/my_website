@@ -1,6 +1,16 @@
-import type { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { Children, isValidElement, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import type { MDXRemoteProps } from 'next-mdx-remote/rsc'
 import { AgentWorkflow } from '@/components/agent-workflow'
+
+function headingText(children: ReactNode): string {
+  return Children.toArray(children).map((child) => {
+    if (typeof child === 'string' || typeof child === 'number') return String(child)
+    if (isValidElement(child)) {
+      return headingText((child.props as { children?: ReactNode }).children)
+    }
+    return ''
+  }).join('').trim() || '此标题'
+}
 
 function Heading({ level, id, children, ...props }: {
   level: 2 | 3
@@ -10,7 +20,7 @@ function Heading({ level, id, children, ...props }: {
   const Tag = `h${level}` as const
   return (
     <Tag id={id} {...props}>
-      {id ? <a className="heading-anchor" href={`#${id}`} aria-label={`链接到 ${String(children)}`}>#</a> : null}
+      {id ? <a className="heading-anchor" href={`#${id}`} aria-label={`链接到 ${headingText(children)}`}>#</a> : null}
       {children}
     </Tag>
   )
