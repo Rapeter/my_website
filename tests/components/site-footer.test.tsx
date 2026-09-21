@@ -63,7 +63,13 @@ test('closes the WeChat card with Escape or an outside click', async () => {
   await user.click(trigger)
   await user.keyboard('{Escape}')
   expect(trigger).toHaveAttribute('aria-expanded', 'false')
+  expect(trigger).toHaveFocus()
   expect(screen.queryByRole('dialog', { name: '微信二维码' })).not.toBeInTheDocument()
+
+  await user.keyboard('{Enter}')
+  expect(trigger).toHaveAttribute('aria-expanded', 'true')
+  expect(screen.getByRole('dialog', { name: '微信二维码' })).toBeInTheDocument()
+  await user.click(trigger)
 
   await user.click(trigger)
   await user.click(screen.getByRole('button', { name: '页脚外部' }))

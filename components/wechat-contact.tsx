@@ -34,9 +34,6 @@ export function WechatContact({ imageSrc, imageAlt, dialogLabel }: WechatContact
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return
       close()
-      if (containerRef.current?.contains(document.activeElement)) {
-        (document.activeElement as HTMLElement).blur()
-      }
     }
 
     document.addEventListener('pointerdown', handlePointerDown)

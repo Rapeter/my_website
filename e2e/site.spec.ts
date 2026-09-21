@@ -23,13 +23,16 @@ test('mobile pages do not overflow horizontally', async ({ page }) => {
     expect(sizes.scroll, `${path} should stay within the viewport`).toBeLessThanOrEqual(sizes.client)
   }
 
-  await page.goto('/')
-  await page.getByRole('button', { name: 'WeChat' }).click()
-  const openSizes = await page.evaluate(() => ({
-    scroll: document.documentElement.scrollWidth,
-    client: document.documentElement.clientWidth
-  }))
-  expect(openSizes.scroll, 'open WeChat card should stay within the viewport').toBeLessThanOrEqual(openSizes.client)
+  for (const width of [320, 375, 390]) {
+    await page.setViewportSize({ width, height: 844 })
+    await page.goto('/')
+    await page.getByRole('button', { name: 'WeChat' }).click()
+    const openSizes = await page.evaluate(() => ({
+      scroll: document.documentElement.scrollWidth,
+      client: document.documentElement.clientWidth
+    }))
+    expect(openSizes.scroll, `open WeChat card should fit a ${width}px viewport`).toBeLessThanOrEqual(openSizes.client)
+  }
 })
 
 test('page labels use a sans-serif signpost with a short blue rule', async ({ page }) => {
@@ -62,6 +65,21 @@ test('desktop hover and repeated click control the WeChat card', async ({ page }
   await expect(card).toBeVisible()
   await expect(page.getByRole('img', { name: 'SylarWang 的微信名片二维码' })).toBeVisible()
 
+  const triggerBox = await trigger.boundingBox()
+  const cardBox = await card.boundingBox()
+  expect(triggerBox).not.toBeNull()
+  expect(cardBox).not.toBeNull()
+  await page.mouse.move(triggerBox!.x + triggerBox!.width / 2, triggerBox!.y - 1)
+  await expect(card).toBeVisible()
+  await page.mouse.move(
+    triggerBox!.x + triggerBox!.width / 2,
+    (cardBox!.y + cardBox!.height + triggerBox!.y) / 2
+  )
+  await expect(card).toBeVisible()
+  await page.mouse.move(cardBox!.x + cardBox!.width / 2, cardBox!.y + cardBox!.height / 2)
+  await expect(card).toBeVisible()
+
+  await trigger.hover()
   await trigger.click()
   await trigger.click()
   await expect(card).toBeHidden()
