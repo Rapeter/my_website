@@ -7,7 +7,7 @@ import { ResumeDocument, resumeBodyForDisplay } from '@/components/resume-docume
 import { getCurrentResume } from '@/lib/content/resumes'
 
 export const metadata: Metadata = {
-  title: '简历',
+  title: { absolute: '王楷中｜AI 应用开发实习生简历' },
   description: '王楷中的当前在线简历：AI 应用开发实习生。'
 }
 

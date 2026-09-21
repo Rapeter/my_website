@@ -13,7 +13,7 @@ export default function ProjectsPage() {
   return (
     <div className="page-shell page-section">
       <header className="page-heading">
-        <p className="eyebrow"><span aria-hidden="true">$</span> ls ./projects</p>
+        <p className="eyebrow">PROJECTS / 项目</p>
         <h1>项目案例</h1>
         <p>从问题、工作流和技术决策出发，展示我如何把 Agent 能力推进到可验证的应用里。</p>
       </header>

@@ -1,4 +1,4 @@
-# 王楷中的个人网站
+# SylarWang 的个人网站
 
 面向招聘者、面试官与技术同行的个人网站，集中展示 AI Agent / AI 应用开发项目、公开协作证据、博客和当前简历。网站使用 Next.js、TypeScript 与本地 Markdown/MDX 内容文件构建，不依赖数据库、CMS 或在线 GitHub API。
 

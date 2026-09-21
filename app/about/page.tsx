@@ -4,16 +4,16 @@ import { siteConfig } from '@/lib/site-config'
 
 export const metadata: Metadata = {
   title: '关于',
-  description: '关于王楷中：墨尔本大学信息技术硕士在读，关注 AI Agent 与 AI 应用开发。'
+  description: '关于 SylarWang：墨尔本大学信息技术硕士在读，关注 AI Agent 与 AI 应用开发。'
 }
 
 export default function AboutPage() {
   return (
     <div className="page-shell page-section about-page">
       <header className="about-hero">
-        <p className="eyebrow"><span aria-hidden="true">$</span> whoami</p>
-        <h1>你好，我是王楷中。</h1>
-        <p>一名正在寻找 AI 应用开发实习机会的学生开发者，关注 AI Agent 如何走出演示，进入可维护、可验证的真实应用。</p>
+        <p className="eyebrow">ABOUT / 关于我</p>
+        <h1>你好，我是 SylarWang。</h1>
+        <p>一名墨尔本大学信息技术硕士在读的开发者，关注 AI Agent 如何走出演示，进入可维护、可验证的真实应用。</p>
       </header>
 
       <div className="about-grid">

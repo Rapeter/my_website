@@ -22,6 +22,79 @@ test('mobile pages do not overflow horizontally', async ({ page }) => {
     }))
     expect(sizes.scroll, `${path} should stay within the viewport`).toBeLessThanOrEqual(sizes.client)
   }
+
+  for (const width of [320, 375, 390]) {
+    await page.setViewportSize({ width, height: 844 })
+    await page.goto('/')
+    await page.getByRole('button', { name: 'WeChat' }).click()
+    const openSizes = await page.evaluate(() => ({
+      scroll: document.documentElement.scrollWidth,
+      client: document.documentElement.clientWidth
+    }))
+    expect(openSizes.scroll, `open WeChat card should fit a ${width}px viewport`).toBeLessThanOrEqual(openSizes.client)
+  }
+})
+
+test('page labels use a sans-serif signpost with a short blue rule', async ({ page }) => {
+  await page.goto('/projects')
+  const label = page.locator('.eyebrow')
+
+  await expect(label).toHaveText('PROJECTS / 项目')
+  const style = await label.evaluate((element) => {
+    const labelStyle = getComputedStyle(element)
+    const ruleStyle = getComputedStyle(element, '::before')
+    return {
+      fontFamily: labelStyle.fontFamily.toLowerCase(),
+      ruleWidth: Number.parseFloat(ruleStyle.width),
+      ruleColor: ruleStyle.backgroundColor
+    }
+  })
+
+  expect(style.fontFamily).not.toMatch(/monospace|menlo|consolas/)
+  expect(style.ruleWidth).toBeGreaterThanOrEqual(20)
+  expect(style.ruleColor).not.toBe('rgba(0, 0, 0, 0)')
+})
+
+test('desktop hover and repeated click control the WeChat card', async ({ page }, testInfo) => {
+  test.skip(!testInfo.project.name.startsWith('desktop'), 'desktop interaction only')
+  await page.goto('/')
+  const trigger = page.getByRole('button', { name: 'WeChat' })
+  const card = page.getByRole('dialog', { name: '微信二维码' })
+
+  await trigger.hover()
+  await expect(card).toBeVisible()
+  await expect(page.getByRole('img', { name: 'SylarWang 的微信名片二维码' })).toBeVisible()
+
+  const triggerBox = await trigger.boundingBox()
+  const cardBox = await card.boundingBox()
+  expect(triggerBox).not.toBeNull()
+  expect(cardBox).not.toBeNull()
+  await page.mouse.move(triggerBox!.x + triggerBox!.width / 2, triggerBox!.y - 1)
+  await expect(card).toBeVisible()
+  await page.mouse.move(
+    triggerBox!.x + triggerBox!.width / 2,
+    (cardBox!.y + cardBox!.height + triggerBox!.y) / 2
+  )
+  await expect(card).toBeVisible()
+  await page.mouse.move(cardBox!.x + cardBox!.width / 2, cardBox!.y + cardBox!.height / 2)
+  await expect(card).toBeVisible()
+
+  await trigger.hover()
+  await trigger.click()
+  await trigger.click()
+  await expect(card).toBeHidden()
+})
+
+test('mobile click opens and closes the WeChat card', async ({ page }, testInfo) => {
+  test.skip(!testInfo.project.name.startsWith('mobile'), 'mobile interaction only')
+  await page.goto('/')
+  const trigger = page.getByRole('button', { name: 'WeChat' })
+  const card = page.getByRole('dialog', { name: '微信二维码' })
+
+  await trigger.click()
+  await expect(card).toBeVisible()
+  await trigger.click()
+  await expect(card).toBeHidden()
 })
 
 test('mobile navigation exposes its state accessibly', async ({ page }) => {
@@ -44,6 +117,10 @@ test('core pages render without external network access', async ({ page, baseURL
 
   await page.goto('/')
   await expect(page.getByRole('heading', { name: /AI Agent.*AI 应用开发/ })).toBeVisible()
+  await page.getByRole('button', { name: 'WeChat' }).click()
+  const wechatImage = page.getByRole('img', { name: 'SylarWang 的微信名片二维码' })
+  await expect(wechatImage).toBeVisible()
+  await expect.poll(() => wechatImage.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true)
   await page.goto('/projects/folio')
   await expect(page.getByRole('heading', { name: 'Folio' })).toBeVisible()
   await page.goto('/blog')

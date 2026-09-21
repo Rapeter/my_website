@@ -20,10 +20,10 @@ export function HomeContent({ projects, posts }: { projects: ProjectEntry[]; pos
   return (
     <>
       <section className="page-shell home-intro">
-        <p className="eyebrow"><span aria-hidden="true">$</span> open_to_work --role ai-application-intern</p>
-        <h1>AI Agent /<br />AI 应用开发<span className="home-intro__status">｜求职中</span></h1>
+        <p className="eyebrow">AI AGENT / 应用开发</p>
+        <h1>AI Agent /<br />AI 应用开发</h1>
         <p className="home-intro__lead">
-          我是王楷中，关注工作流、工具调用与应用落地。我尝试把 Agent 从“能回答”推进到“能可靠完成任务”，并用项目、测试和公开记录证明过程。
+          我是 SylarWang，关注工作流、工具调用与应用落地。我尝试把 Agent 从“能回答”推进到“能可靠完成任务”，并用项目、测试和公开记录证明过程。
         </p>
         <div className="button-row">
           <Link className="button button--primary" href="/projects">项目</Link>
@@ -95,8 +95,8 @@ export function HomeContent({ projects, posts }: { projects: ProjectEntry[]; pos
       <section className="page-shell resume-cta">
         <div>
           <p className="section-kicker">NEXT / 下一站</p>
-          <h2>正在寻找 AI 应用开发实习机会</h2>
-          <p>墨尔本大学信息技术硕士在读，希望进入重视产品落地、工程验证与真实用户价值的团队。</p>
+          <h2>从项目与经历，了解我的技术方向</h2>
+          <p>墨尔本大学信息技术硕士在读，持续关注产品落地、工程验证与真实用户价值。</p>
         </div>
         <Link className="button button--primary" href="/resume">阅读完整简历</Link>
       </section>
