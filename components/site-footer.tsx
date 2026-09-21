@@ -5,7 +5,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">
-        <p>© {new Date().getFullYear()} {siteConfig.name}. Built for clear, verifiable work.</p>
+        <p>© {new Date().getFullYear()} {siteConfig.brandName}. Built for clear, verifiable work.</p>
         <div className="site-footer__links">
           <a href={siteConfig.github} target="_blank" rel="noreferrer">GitHub</a>
           <Link href={`mailto:${siteConfig.email}`}>Email</Link>

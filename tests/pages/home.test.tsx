@@ -8,7 +8,7 @@ test('shows identity, evidence, and honest article state with no posts', () => {
 
   expect(screen.getByRole('heading', { name: /AI Agent.*AI 应用开发/i })).toBeInTheDocument()
   expect(screen.getAllByText('Folio').length).toBeGreaterThan(0)
-  expect(screen.getByText(/准备写作的方向/)).toBeInTheDocument()
+  expect(screen.getByText(/持续记录的方向/)).toBeInTheDocument()
   expect(screen.queryByText(/篇文章|访问量|项目数量/)).not.toBeInTheDocument()
 })
 
@@ -31,7 +31,7 @@ test('replaces the empty state with only the three newest published posts', () =
 
   render(<HomeContent projects={getAllProjects()} posts={posts} />)
 
-  expect(screen.queryByText(/准备写作的方向/)).not.toBeInTheDocument()
+  expect(screen.queryByText(/持续记录的方向/)).not.toBeInTheDocument()
   expect(screen.getByRole('heading', { name: '最新文章' })).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: '第二篇' })).toBeInTheDocument()
   expect(screen.getByRole('heading', { name: '第三篇' })).toBeInTheDocument()

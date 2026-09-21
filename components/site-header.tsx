@@ -13,9 +13,8 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-header__inner">
-        <Link className="site-brand" href="/" aria-label={`${siteConfig.name}首页`}>
-          <span className="site-brand__mark" aria-hidden="true">R/</span>
-          <span>{siteConfig.name}</span>
+        <Link className="site-brand" href="/" aria-label={`${siteConfig.brandName}首页`}>
+          <span>{siteConfig.brandName}</span>
         </Link>
 
         <button

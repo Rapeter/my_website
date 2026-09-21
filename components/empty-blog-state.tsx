@@ -8,9 +8,9 @@ export function EmptyBlogState() {
   return (
     <div className="empty-blog-state">
       <div>
-        <span className="empty-blog-state__prompt" aria-hidden="true">writing_queue[]</span>
+        <span className="empty-blog-state__prompt">COMING SOON / 即将更新</span>
         <h3>文章正在路上</h3>
-        <p>我还在求职和学习阶段，不用虚构的文章数量填满这里。准备写作的方向：</p>
+        <p>这里会持续记录项目实践、面试复盘与学习过程中的思考。持续记录的方向：</p>
       </div>
       <ul>
         {plannedTopics.map((topic) => <li key={topic}>{topic}</li>)}

@@ -7,9 +7,9 @@ import './globals.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
-  title: { default: siteConfig.title, template: `%s｜${siteConfig.name}` },
+  title: { default: siteConfig.title, template: `%s｜${siteConfig.brandName}` },
   description: siteConfig.description,
-  authors: [{ name: siteConfig.name, url: siteConfig.github }],
+  authors: [{ name: siteConfig.brandName, url: siteConfig.github }],
   icons: { icon: '/icon.svg' }
 }
 
