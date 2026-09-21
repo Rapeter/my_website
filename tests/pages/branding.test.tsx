@@ -50,10 +50,10 @@ describe('stable bilingual page labels', () => {
   })
 
   test.each([
-    ['projects', <ProjectsPage />, 'PROJECTS / 项目', /ls \.\/projects/],
-    ['blog', <BlogIndex posts={[]} />, 'WRITING / 博客', /find \.\/notes/],
-    ['about', <AboutPage />, 'ABOUT / 关于我', /whoami/],
-    ['not found', <NotFound />, '404 / 页面未找到', /status --code 404/]
+    ['projects', <ProjectsPage key="projects" />, 'PROJECTS / 项目', /ls \.\/projects/],
+    ['blog', <BlogIndex key="blog" posts={[]} />, 'WRITING / 博客', /find \.\/notes/],
+    ['about', <AboutPage key="about" />, 'ABOUT / 关于我', /whoami/],
+    ['not found', <NotFound key="not-found" />, '404 / 页面未找到', /status --code 404/]
   ])('%s page uses its stable label', (_name, page, label, oldCopy) => {
     render(page)
 

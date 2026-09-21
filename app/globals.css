@@ -147,9 +147,21 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -.04em; text-wrap: balance; }
 .signal-line span { padding: .38rem .65rem; border: 1px solid var(--border); border-radius: 999px; background: color-mix(in srgb, var(--surface) 70%, transparent); }
 
 .site-footer { border-top: 1px solid var(--border); color: var(--muted); font-size: .86rem; }
-.site-footer__inner { min-height: 7rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.site-footer__links { display: flex; gap: 1rem; }
-.site-footer a:hover { color: var(--foreground); }
+.site-footer__inner { display: grid; grid-template-columns: minmax(12rem, .7fr) minmax(24rem, 1.3fr); gap: clamp(2rem, 7vw, 6rem); padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.site-footer__brand { display: grid; align-content: start; gap: .45rem; }
+.site-footer__brand strong { color: var(--foreground); font-size: 1.1rem; letter-spacing: -.02em; }
+.site-footer__brand p, .site-footer__brand small { margin: 0; }
+.site-footer__contacts { display: grid; gap: 1rem; align-content: start; margin: 0; padding: 0; list-style: none; }
+.site-footer__contacts li { display: grid; grid-template-columns: 5rem minmax(0, 1fr); align-items: start; gap: 1rem; }
+.site-footer__label { color: var(--foreground); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.site-footer__value { min-width: 0; overflow-wrap: anywhere; }
+.site-footer a:hover, .wechat-contact__trigger:hover { color: var(--foreground); }
+.wechat-contact { position: relative; justify-self: start; }
+.wechat-contact__trigger { padding: 0; border: 0; color: var(--muted); background: transparent; font: inherit; cursor: pointer; }
+.wechat-contact__trigger::after { content: ' +'; color: var(--accent); }
+.wechat-contact__trigger[aria-expanded='true']::after { content: ' −'; }
+.wechat-contact__popover { position: absolute; right: 0; bottom: calc(100% + .8rem); z-index: 20; width: min(18rem, calc(100vw - 2rem)); padding: .5rem; border: 1px solid var(--border); border-radius: 1rem; background: var(--background); box-shadow: var(--shadow); }
+.wechat-contact__popover img { display: block; width: 100%; height: auto; border-radius: .7rem; }
 
 .home-section { padding-block: clamp(4.5rem, 10vw, 8rem); }
 .home-band { border-block: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 62%, transparent); }
@@ -329,7 +341,9 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -.04em; text-wrap: balance; }
   .site-navigation { flex-direction: column; align-items: stretch; }
   .site-navigation a { padding: .7rem .8rem; }
   .theme-toggle { justify-content: center; }
-  .site-footer__inner { align-items: flex-start; flex-direction: column; justify-content: center; }
+  .site-footer__inner { grid-template-columns: 1fr; }
+  .site-footer__contacts li { grid-template-columns: 4.25rem minmax(0, 1fr); }
+  .wechat-contact__popover { right: auto; left: 0; }
   .home-intro { padding-block: 5rem; }
   .home-intro h1 { font-size: clamp(2.8rem, 16vw, 4.5rem); }
   .project-card, .project-card:first-child { grid-column: 1 / -1; min-height: 23rem; }
