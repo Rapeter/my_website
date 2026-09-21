@@ -22,6 +22,12 @@ test('renders only the current resume without a version selector', () => {
   expect(screen.queryByLabelText(/简历版本/)).not.toBeInTheDocument()
 })
 
+test('does not publish a personal photo on the online resume', () => {
+  render(<ResumeDocument resume={currentResume} />)
+
+  expect(screen.queryByRole('img')).not.toBeInTheDocument()
+})
+
 test('omits the download action when no PDF exists', () => {
   render(<ResumeDocument resume={currentResume} />)
 

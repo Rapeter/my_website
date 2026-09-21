@@ -83,7 +83,7 @@ pdf: /resume/王楷中_AI应用开发实习生.pdf
 ---
 ```
 
-`version` 必须符合 `YYYY-MM-slug`。新版本发布时，将旧版本改为 `current: false`，并确保所有文件中恰好只有一份 `current: true`；否则构建会失败。`pdf` 可省略，省略后页面不会显示 PDF 下载入口。证件照位于 `public/images/profile.jpg`。
+`version` 必须符合 `YYYY-MM-slug`。新版本发布时，将旧版本改为 `current: false`，并确保所有文件中恰好只有一份 `current: true`；否则构建会失败。`pdf` 可省略，省略后页面不会显示 PDF 下载入口。在线简历不展示证件照。
 
 ## 本地质量门
 

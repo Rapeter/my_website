@@ -241,7 +241,6 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -.04em; text-wrap: balance; }
 .resume-role { margin: 0; color: var(--accent); font-size: 1.15rem; font-weight: 650; }
 .resume-header address { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; color: var(--muted); font-style: normal; font-size: .88rem; }
 .resume-header address a:hover { color: var(--foreground); }
-.resume-photo { flex: 0 0 auto; width: 118px; height: 148px; object-fit: cover; border-radius: .65rem; filter: saturate(.88); }
 .resume-actions { display: flex; justify-content: flex-end; gap: .65rem; padding-block: 1rem; }
 .resume-actions a { padding: .45rem .75rem; border: 1px solid var(--border); border-radius: .5rem; font-size: .82rem; }
 .resume-body { max-width: none; }
@@ -369,7 +368,6 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -.04em; text-wrap: balance; }
   .section-heading--row, .resume-cta { align-items: flex-start; flex-direction: column; }
   .article-grid { grid-template-columns: 1fr; }
   .article-card { min-height: 16rem; }
-  .resume-photo { width: 86px; height: 108px; }
   .about-grid { grid-template-columns: 1fr; }
   .about-grid section { min-height: auto; padding-block: 2rem; }
   .about-grid section + section { border-left: 0; border-top: 1px solid var(--border); }
